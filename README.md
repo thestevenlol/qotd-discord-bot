@@ -59,13 +59,21 @@ A Discord bot that automatically sends questions to designated channels at sched
    ```
    DISCORD_TOKEN=your_discord_token_here
    ```
-4. Install dependencies:
+4. Install dependencies (choose one method):
    ```
+   # Using uv
    uv add discord.py python-dotenv apscheduler aiosqlite
+   
+   # OR using pip with requirements.txt
+   pip install -r requirements.txt
    ```
 5. Run the bot:
    ```
+   # Using uv
    uv run main.py
+   
+   # OR using standard python
+   python main.py
    ```
 
 ### Option 2: Docker Setup

@@ -2,15 +2,11 @@ FROM python:3.12-slim
 
 WORKDIR /app
 
-# Install uv
-RUN pip install --no-cache-dir uv
-
-# Copy just the pyproject.toml and uv.lock files first to leverage Docker layer caching
-COPY pyproject.toml uv.lock* ./
+# Copy requirements first for better layer caching
+COPY requirements.txt .
 
 # Install dependencies
-RUN uv venv
-RUN uv pip install discord.py python-dotenv apscheduler aiosqlite
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the rest of the application
 COPY . .
