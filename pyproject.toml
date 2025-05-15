@@ -1,10 +1,12 @@
 [project]
 name = "qotd-discord-bot"
 version = "0.1.0"
-description = "Add your description here"
+description = "Discord bot for sending daily/weekly questions to channels"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "discord>=2.3.2",
-    "python-dotenv>=1.1.0",
+    "discord-py>=2.3.1",
+    "python-dotenv>=1.0.0",
+    "apscheduler>=3.10.1",
+    "aiosqlite>=0.19.0",
 ]

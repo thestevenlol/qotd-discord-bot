@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  qotd-bot:
+    build: .
+    restart: unless-stopped
+    volumes:
+      - ./data:/app/data
+    env_file:
+      - .env
+    environment:
+      - DB_PATH=/app/data/qotd.db
