@@ -9,8 +9,7 @@ RUN pip install --no-cache-dir uv
 COPY pyproject.toml uv.lock* ./
 
 # Install dependencies
-RUN uv sync --no-cache-dir
-RUN uv add discord
+RUN uv pip install --no-deps -e .
 
 # Copy the rest of the application
 COPY . .
