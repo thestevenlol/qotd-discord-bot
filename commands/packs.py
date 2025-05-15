@@ -71,6 +71,24 @@ class Packs(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         
+    async def get_pack_autocomplete(self, interaction: discord.Interaction, current: str):
+        """Autocomplete for pack names."""
+        async with aiosqlite.connect(DB_PATH) as db:
+            db.row_factory = aiosqlite.Row
+            
+            async with db.execute(
+                '''SELECT name FROM question_packs 
+                WHERE guild_id = ? AND name LIKE ?
+                ORDER BY name''',
+                (interaction.guild_id, f"%{current}%")
+            ) as cursor:
+                packs = await cursor.fetchall()
+                
+        return [
+            app_commands.Choice(name=pack['name'], value=pack['name'])
+            for pack in packs[:25]  # Max 25 choices
+        ]
+    
     @app_commands.command(name="createpack", description="Create a new question pack")
     @app_commands.checks.has_permissions(manage_messages=True)
     @app_commands.describe(
@@ -99,7 +117,7 @@ class Packs(commands.Cog):
                     f"Add questions with `/addquestion` and link to channels with `/linkpack`",
                     ephemeral=True
                 )
-            except aiosqlite.IntegrityError:
+            except aiosqlite.IntegrityError:            
                 await interaction.response.send_message(
                     f"A question pack with name '{name}' already exists in this server.",
                     ephemeral=True
@@ -111,6 +129,7 @@ class Packs(commands.Cog):
         name="Name of the question pack to delete",
         confirm="Type 'confirm' to delete the pack (this will delete all questions in the pack)"
     )
+    @app_commands.autocomplete(name=get_pack_autocomplete)
     async def deletepack(
         self,
         interaction: discord.Interaction,
