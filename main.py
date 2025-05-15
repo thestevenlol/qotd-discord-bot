@@ -260,9 +260,9 @@ async def send_question_to_channel(channel):
             pack = await cursor.fetchone()
             
         # Get ping role if configured
-        ping_text = ""
+        ping_role = None
         if config['ping_role_id']:
-            ping_text = f"<@&{config['ping_role_id']}> "
+            ping_role = channel.guild.get_role(config['ping_role_id'])
             
         await db.commit()
     
@@ -274,7 +274,11 @@ async def send_question_to_channel(channel):
     )
     embed.set_footer(text=f"From pack: {pack['name']}")
     
-    await channel.send(ping_text, embed=embed)
+    # Send the message, mentioning the role if needed
+    if ping_role:
+        await channel.send(content=ping_role.mention, embed=embed)
+    else:
+        await channel.send(embed=embed)
 
 def main():
     """Main entry point for the bot."""
