@@ -10,7 +10,7 @@ COPY pyproject.toml uv.lock* ./
 
 # Install dependencies
 RUN uv venv
-RUN uv pip install --no-deps -e .
+RUN uv pip install discord.py python-dotenv apscheduler aiosqlite
 
 # Copy the rest of the application
 COPY . .
