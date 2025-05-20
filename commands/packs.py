@@ -1,3 +1,4 @@
+import logging
 import discord
 from discord import app_commands
 from discord.ext import commands
@@ -6,6 +7,7 @@ import asyncio
 import os
 
 DB_PATH = os.getenv('DB_PATH', "qotd.db")
+logger = logging.getLogger(__name__)
 
 class PaginationView(discord.ui.View):
     """Improved pagination view with faster page changes."""
