@@ -1,3 +1,4 @@
+import logging
 import discord
 from discord import app_commands
 from discord.ext import commands
@@ -6,6 +7,7 @@ import os
 import io
 
 DB_PATH = os.getenv("DB_PATH", "qotd.db")
+logger = logging.getLogger(__name__)
 
 
 class Questions(commands.Cog):
@@ -179,8 +181,8 @@ class Questions(commands.Cog):
 
                             await channel.send(embed=embed)
                             break
-                except:
-                    pass
+                except Exception as e:
+                    logger.error(f"Failed to send suggestion notification to staff channel: {e}")
 
     @app_commands.command(
         name="reviewsuggestion", description="Review a suggested question"
@@ -265,8 +267,8 @@ class Questions(commands.Cog):
                             f"Your question suggestion for '{suggestion['pack_name']}' has been approved:\n"
                             f"{suggestion['content']}"
                         )
-                except:
-                    pass
+                except Exception as e:
+                    logger.error(f"Failed to send DM notification to suggester {suggestion['suggested_by']} for suggestion {suggestion_id}: {e}")
             else:
                 # Update suggestion status
                 await db.execute(
