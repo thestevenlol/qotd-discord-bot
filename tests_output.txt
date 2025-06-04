@@ -1,0 +1,8 @@
+....                                                                     [100%]
+=============================== warnings summary ===============================
+../../root/.pyenv/versions/3.12.10/lib/python3.12/site-packages/discord/player.py:29
+  /root/.pyenv/versions/3.12.10/lib/python3.12/site-packages/discord/player.py:29: DeprecationWarning: 'audioop' is deprecated and slated for removal in Python 3.13
+    import audioop
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+4 passed, 1 warning in 0.24s
