@@ -2,6 +2,7 @@ import os
 import discord
 import dotenv
 
+from db import get_connection
 
 class QOTDClient(discord.Client):
     async def on_ready(self):
@@ -13,6 +14,8 @@ class QOTDClient(discord.Client):
 
 def main():
     dotenv.load_dotenv()
+
+    conn = get_connection()
 
     intents = discord.Intents.default()
     intents.message_content = True
